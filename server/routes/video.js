@@ -76,5 +76,18 @@ router.post("/thumbnail", (req, res) => {
         
 });
 
+router.post("/uploadVideo", (req, res) => {
+    // 비디오 정보들을 DB에 저장
+    const video = new Video(req.body);
+
+    video.save((err, doc) => {
+        console.log(err);
+        if (err) return res.status(400).json({ success: false, err });
+        return res.status(200).json({
+            success: true
+        });
+    });
+});
+
 
 module.exports = router;

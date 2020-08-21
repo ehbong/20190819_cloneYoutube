@@ -1,39 +1,38 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const jwt = require('jsonwebtoken');
-const moment = require("moment");
+const Schema = mongoose.Schema;
 
-const videoSchema = mongoose.Schema({
-    name: {
-        type:String,
-        maxlength:50
+const videoSchema = Schema({
+    writer: {
+        type: Schema.Types.ObjectId,
+        ref:'User'
     },
-    email: {
-        type:String,
-        trim:true,
-        unique: 1 
-    },
-    password: {
-        type: String,
-        minglength: 5
-    },
-    lastname: {
+    title: {
         type:String,
         maxlength: 50
     },
-    role : {
-        type:Number,
-        default: 0 
-    },
-    image: String,
-    token : {
+    description: {
         type: String,
     },
-    tokenExp :{
-        type: Number
+    privacy: {
+        type: Number,
+    },
+    filePath : {
+        type: String,
+    },
+    category : {
+        type: String,
+    },
+    views :{
+        type: Number,
+        default: 0
+    },
+    duration :{
+        type: String
+    },
+    thumbnail :{
+        type: String
     }
-})
+}, { timestamps: true})
 
 
 const Video = mongoose.model('Video', videoSchema);
