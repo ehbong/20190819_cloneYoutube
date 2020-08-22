@@ -29,7 +29,7 @@ function LandingPage() {
         var seconds = Math.floor(obj.duration - (minutes * 60));
 
         return <Col key={idx} lg={6} md={8} xs={24}>
-                <a href={`/video/post/${obj._id}`}>
+                <a href={`/video/${obj._id}`}>
                     <div style={{ position: 'relative' }}>
                         <img src={`http://localhost:5000/${obj.thumbnail}`} alt="video" style={{ width: '100%' }}/>
                         <div className="duration">

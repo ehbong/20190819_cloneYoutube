@@ -111,7 +111,7 @@ function VideoUploadPage(props) {
                     <Dropzone 
                     onDrop={onDrop}
                     multiple={false}
-                    maxSize={10000000}>
+                    maxSize={10000000000}>
                         {({ getRootProps, getInputProps })=>(
                             <div style={{ width: '300px', height: '240px', border:'1px solid lightgray', display:'flex', alignItems: 'center', justifyContent: 'center' }}{...getRootProps()}>
                                 
