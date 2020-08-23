@@ -40,7 +40,6 @@ function Subscribe(props) {
         }
 
         if(Subscribed) {
-
             Axios.post('/api/subscribe/unSubscribe', subscribedVariable)
                 .then(res => {
                     if(res.data.success){

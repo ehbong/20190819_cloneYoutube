@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Video } = require("../models/Video");
+const { Subscriber } = require("../models/Subscriber");
 const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
 
@@ -101,6 +102,29 @@ router.get("/getVideos", (req, res) => {
                 videos
             })
         })
+});
+router.post("/getSubscriptionVideos", (req, res) => {
+    console.log(req.body);
+    Subscriber.find({ 'userFrom': req.body.userFrom })
+        .exec((err, subscribe) => {
+            if(err) return res.status(400).send({ success: false, err });
+
+            let subscribedUsers = [];
+            subscribe.map((Subscriber, i) => {
+                subscribedUsers.push(Subscriber.userTo);
+            })
+
+            Video.find({ writer: { $in: subscribedUsers}})
+                .populate('writer')
+                .exec((err, videos) => {
+                    if(err) return res.status(400).json({success: false, err});
+                    return res.status(200).json({
+                        success: true,
+                        videos
+                    })
+                })
+        })
+
 });
 router.post("/getVideoDetail", (req, res) => {
     Video.findOne({ "_id": req.body.videoId })
