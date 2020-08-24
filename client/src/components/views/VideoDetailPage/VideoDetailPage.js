@@ -4,6 +4,7 @@ import Axios from 'axios';
 import SideVideo from './Sections/SideVideo';
 import Subscribe from './Sections/Subscribe';
 import Comment from './Sections/Comment';
+import LikeDislikes from './Sections/LikeDislikes';
 
 function VideoDetailPage(props) {
 
@@ -36,6 +37,8 @@ function VideoDetailPage(props) {
             })
     }, []);
 
+    
+
     const refreshFunc = (newComment) => {
         setComments(Comments.concat(newComment));
     }
@@ -51,7 +54,7 @@ function VideoDetailPage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem'}}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${Video.filePath}`} controls/>
                         <List.Item 
-                            actions={[subscribeButton]}
+                            actions={[<LikeDislikes videoId={videoId} />, subscribeButton]}
                         >
                             <List.Item.Meta 
                                 avatar={

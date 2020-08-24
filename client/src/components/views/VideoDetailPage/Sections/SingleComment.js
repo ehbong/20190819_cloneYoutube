@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Comment, Avatar, Button, Input } from 'antd';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
+import LikeDislikes from './LikeDislikes';
 
 const { TextArea } = Input;
 
@@ -45,7 +46,7 @@ function SingleComment(props) {
     return (
         <div>
             <Comment 
-                actions={actions}
+                actions={[actions, <LikeDislikes commentId={props.comment._id} />]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt="profileImage" />}
                 content={<p>{props.comment.content}</p>}
