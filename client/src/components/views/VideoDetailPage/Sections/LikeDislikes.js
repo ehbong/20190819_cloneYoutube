@@ -20,8 +20,19 @@ function LikeDislikes(props) {
     }
 
     const onLikeHandler = ()=>{
+        variable.status = false;
         if(!LikeStatus) { // 좋아요 상태로 전환할때
-            setDislikeStatus(false);
+            if(DislikeStatus){
+                setDislikeStatus(false);
+                Axios.post('/api/likeDisLike/saveDislike', {...variable})
+                .then(res => {
+                    if(res.data.success){
+                        console.log(res.data);
+                    } else {
+                        alert('싫어요 상태 적용을 실패 했습니다.');
+                    }
+                })
+            }
             variable.status = true;
         }
         console.log(variable);
@@ -36,11 +47,30 @@ function LikeDislikes(props) {
         setLikeStatus(!LikeStatus);
     }
     const onDislikeHandler = ()=>{
+        variable.status = false;
         if(!DislikeStatus) { // 싫어요 상태로 전환할때
-            setLikeCount(LikeCount-1);
-            setDislikeCount(DislikeCount+1);
-            setLikeStatus(false);
+            if(LikeStatus){
+                setLikeStatus(false);
+                Axios.post('/api/likeDisLike/savelike', {...variable})
+                .then(res => {
+                    if(res.data.success){
+                        console.log(res.data);
+                    } else {
+                        alert('좋아요 상태 적용을 실패 했습니다.');
+                    }
+                })
+            }
+            variable.status = true;
         }
+        console.log(variable);
+        Axios.post('/api/likeDisLike/saveDislike', variable)
+        .then(res => {
+            if(res.data.success){
+                console.log(res.data);
+            } else {
+                alert('싫어요 상태 적용을 실패 했습니다.');
+            }
+        })
         setDislikeStatus(!DislikeStatus);
     }
 
@@ -55,6 +85,16 @@ function LikeDislikes(props) {
                     console.log(res.data);
                     setLikeCount(res.data.result.length);
                     setLikeStatus(!!res.data.result.find((obj)=>obj.userId == user.userData._id));
+                } else {
+                    alert('좋아요 리스트 가져오기를 실패 했습니다.');
+                }
+            })
+        Axios.post('/api/likeDisLike/getDislikes', variable)
+            .then(res => {
+                if(res.data.success){
+                    console.log(res.data);
+                    setDislikeCount(res.data.result.length);
+                    setDislikeStatus(!!res.data.result.find((obj)=>obj.userId == user.userData._id));
                 } else {
                     alert('좋아요 리스트 가져오기를 실패 했습니다.');
                 }

@@ -46,15 +46,15 @@ function VideoDetailPage(props) {
 
     if(Video.writer){
 
-        const subscribeButton = Video.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={Video.writer._id} userFrom={localStorage.getItem("userId")} />
-
+        const subscribeButton = Video.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={Video.writer._id} userFrom={localStorage.getItem("userId")} />;
+        const LikeDislikesButton = Video.writer._id !== localStorage.getItem("userId") && <LikeDislikes videoId={videoId} />;
         return (
             <Row>
                 <Col lg={18} xs={24}>
                     <div style={{ width: '100%', padding: '3rem 4rem'}}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${Video.filePath}`} controls/>
                         <List.Item 
-                            actions={[<LikeDislikes videoId={videoId} />, subscribeButton]}
+                            actions={[LikeDislikesButton, subscribeButton]}
                         >
                             <List.Item.Meta 
                                 avatar={

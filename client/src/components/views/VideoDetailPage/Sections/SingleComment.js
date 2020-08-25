@@ -42,11 +42,11 @@ function SingleComment(props) {
                 }
             })
     }
-
+    const LikeDislikesButton = props.comment.writer._id !== user.userData._id && <LikeDislikes commentId={props.comment._id} />;
     return (
         <div>
             <Comment 
-                actions={[actions, <LikeDislikes commentId={props.comment._id} />]}
+                actions={[actions, LikeDislikesButton]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt="profileImage" />}
                 content={<p>{props.comment.content}</p>}
