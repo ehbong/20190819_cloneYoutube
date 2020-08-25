@@ -46,7 +46,7 @@ function SingleComment(props) {
     return (
         <div>
             <Comment 
-                actions={[actions, LikeDislikesButton]}
+                actions={[LikeDislikesButton, actions]}
                 author={props.comment.writer.name}
                 avatar={<Avatar src={props.comment.writer.image} alt="profileImage" />}
                 content={<p>{props.comment.content}</p>}

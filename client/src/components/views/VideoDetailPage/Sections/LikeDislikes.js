@@ -111,14 +111,14 @@ function LikeDislikes(props) {
                         onClick={onLikeHandler} />}
                     <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{LikeCount}</span>
                 </Tooltip>
-            </span>
+            </span>&nbsp;&nbsp;
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
                     {!DislikeStatus && <DislikeOutlined onClick={onDislikeHandler} />}
                     {DislikeStatus && <DislikeFilled onClick={onDislikeHandler} />}
                     <span style={{ paddingLeft: '8px', cursor: 'auto' }}>{DislikeCount}</span>
                 </Tooltip>
-            </span>
+            </span>&nbsp;&nbsp;
         </div>
     )
 }

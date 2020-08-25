@@ -9,9 +9,14 @@ const { DisLike } = require("../models/DisLike");
 //=================================
 
 router.post("/saveLike", (req, res) => {
+    let param = {};
+    if(req.body.videoId){
+        param = { "videoId": req.body.videoId, userId: req.body.userId };
+    }else{
+        param = { "commentId": req.body.commentId, userId: req.body.userId };
+    }  
     if(req.body.status){
-        
-        Like.find({ 'videoId': req.body.videoId, "userId": req.body.userId }) // 이미 좋아요를 기록이 있는지 확인
+        Like.find(param) // 이미 좋아요를 기록이 있는지 확인
         .exec((err, result) => {
             if(err) return res.status(400).send({ success: false, err });
             
@@ -25,12 +30,7 @@ router.post("/saveLike", (req, res) => {
             }
         })
     }else{
-        let param = {};
-        if(req.body.videoId){
-            param = { "videoId": req.body.videoId, userId: req.body.userId };
-        }else{
-            param = { "commentId": req.body.commentId, userId: req.body.userId };
-        }
+        
         Like.remove(param, (err, doc) => {
             if(err) return res.status(400).send({ success: false, err });
             return res.status(200).json({ success: true, doc });
@@ -38,8 +38,14 @@ router.post("/saveLike", (req, res) => {
     }
 });
 router.post("/saveDislike", (req, res) => {
+    let param = {};
+    if(req.body.videoId){
+        param = { "videoId": req.body.videoId, userId: req.body.userId };
+    }else{
+        param = { "commentId": req.body.commentId, userId: req.body.userId };
+    }
     if(req.body.status){
-        Like.find({ 'videoId': req.body.videoId, "userId": req.body.userId })
+        Like.find(param)
         .exec((err, result) => {
             if(err) return res.status(400).send({ success: false, err });
             if(result.length == 0){
@@ -52,12 +58,7 @@ router.post("/saveDislike", (req, res) => {
             }
         })
     }else{
-        let param = {};
-        if(req.body.videoId){
-            param = { "videoId": req.body.videoId, userId: req.body.userId };
-        }else{
-            param = { "commentId": req.body.commentId, userId: req.body.userId };
-        }
+        
         DisLike.remove(param, (err, doc) => {
             if(err) return res.status(400).send({ success: false, err });
             return res.status(200).json({ success: true, doc });
@@ -66,35 +67,30 @@ router.post("/saveDislike", (req, res) => {
 });
 
 router.post("/getLikes", (req, res) => {
+    let param = {};
     if(req.body.videoId){
-        Like.find({ 'videoId': req.body.videoId })
-        .exec((err, result) => {
-            if(err) return res.status(400).send({ success: false, err });
-            return res.status(200).json({ success: true, result});
-        })
+        param = { 'videoId': req.body.videoId }
     }else{
-        Like.find({ 'commentId': req.body.commentId })
-        .exec((err, result) => {
-            if(err) return res.status(400).send({ success: false, err });
-            return res.status(200).json({ success: true, result});
-        })
+        param = { 'commentId': req.body.commentId };
     }
-    
+    Like.find(param)
+    .exec((err, result) => {
+        if(err) return res.status(400).send({ success: false, err });
+        return res.status(200).json({ success: true, result});
+    })
 });
 router.post("/getDislikes", (req, res) => {
+    let param = {};
     if(req.body.videoId){
-        DisLike.find({ 'videoId': req.body.videoId })
-        .exec((err, result) => {
-            if(err) return res.status(400).send({ success: false, err });
-            return res.status(200).json({ success: true, result});
-        })
+        param = { 'videoId': req.body.videoId }
     }else{
-        DisLike.find({ 'commentId': req.body.commentId })
-        .exec((err, result) => {
-            if(err) return res.status(400).send({ success: false, err });
-            return res.status(200).json({ success: true, result});
-        })
+        param = { 'commentId': req.body.commentId };
     }
+    DisLike.find(param)
+    .exec((err, result) => {
+        if(err) return res.status(400).send({ success: false, err });
+        return res.status(200).json({ success: true, result});
+    })
     
 });
 
